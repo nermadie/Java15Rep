@@ -1,0 +1,53 @@
+Collection
+--> Support object type
+
+- List
+--> need to override T's equals method when using contains,
+remove in List
+--> prefer using ArrayList
+
++ ArrayList
+	. Array with fixed size
+	. size <- length
+	. capacity
+	
++ LinkedList
+	. get/set --> 2
+	. add
+	. remove
+	
+GENERIC:
+Convention
+	E: Element(Collection)
+	K: V: Key/Value(Map)
+	T: Type
+	N: Number
+	S, U, V etc: 2nd, 3rd, 4th types
+Giới hạn kiểu dữ liệu dữ liệu truyền vào generic type
+	VD: <T extends Number>
+
+**Giải thích vì sao test(T t1, T t2) thì khi truyền vào 2 đối tượng khác nhau thì vẫn ổn
+-> VD: test("abc", 123);
+	+ Thì ở đây String và Integer đều implements từ Serializable.
+	Nên bây giờ T được hiểu là test(Serializable t1, Serializable t2)
+*-> VD: test(List<Integer>, List<String>);
+	+ Thì mặc dù List<Integer> và List<String> không có quan hệ kế thừa thân thuộc nào tuy nhiên
+	Integer và String vẫn có quan hệ như bên trên. Nên là T được hiểu là test(List<? extends Serializable> t1, List<? extends Serializable> t2)
+	+ <T> sẽ là List<? extends Serializable> nên không đứng một mình -> vẫn oke
+**Giải thích vì sao test(List<T> t1, List<T> t2) lại không ổn nếu như truyền khác tham số
+-> VD: test(List<Integer>, List<String>);
+	+ Ở đây nếu hiểu ta có thể hiểu <T> là <? extends Serializable> thì sẽ không ổn vì ? không thể đứng 1 mình
+	-> <? extends Serializable> void test(List<...>, List<...>)// Compile Error
+	Nên trong trường hợp này 2 tham số đầu vào phải cùng kiểu dữ liệu List<...> 
+	
+Type parameters support multiple bounds, wildcards don't. <... extends A & B>
+Wildcards support both upper and lower bounds, type parameters just support upper bounds. So, if you want to define a method that takes a List of type Integer or it's super class, you can do:
+	->public void print(List<? super Integer> list) // OK
+
+but you can't use type parameter:
+ 	->public <T super Integer> void print(List<T> list) // Won't compile
+ 	
+? sẽ được sử dụng để thay thế cho việc define bên trong diamond operator
+	->VD: Map<K, V> thì ta có thể Map<?, ?> 
+
+Không thể vừa extends vừa super

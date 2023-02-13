@@ -1,0 +1,66 @@
+Predicate<T>  
+	T->boolean
+
+Consumer<T>
+	T->void
+	
+Function<T, R>
+	T -> R
+	
+Supplier<T>
+	() -> T
+	
+UnaryOperator<T>
+	T -> T
+	
+BinaryOperator<T>
+	(T, T) -> T
+	
+BiPredicate<L, R>
+	<L, R> -> boolean
+	
+BiConsumer<T, U>
+	(T, U) -> void
+	
+BiFunction<T, U, R>
+	(T, U) -> R
+
+
+STREAM
+Stream is "a sequence of elements from a source that supports data processing operation"
+	
+Collections are about data
+Streams ara about computations -> Chi duyet 1 lan roi chuyen sang Collection sau
+
+Stream is a fixed data structure
+
+Không thể lưu lại stream thành 1 biến để forEach,... lại giống như Collection
+
+Stream: Internal Iteration
+Collection: External Iteration
+
+Stream operations: 2 loai
+	+ Intermediate operations: 
+		-> return another stream as the return type.
+		-> Don't perform any processing until a terminal operation is invoked.
+	+ Terminal operation: 
+		-> produce a result from a stream pipeline.
+		-> Result: non-stream value: List, Integer, or even void
+			(collect || count || forEach)
+	
+Working with Streams:
+	-involves 3 items:
+		+ data source
+		+ chain of intermediate operations --> form a stream pipeline
+		+ terminal operation --> executes the stream pipeline and produces a result
+		
+		
+	-Filter and slicing:
+		+ filter(Predicate<T>->boolean)
+		+ distinct()
+		+ limit()
+		+ skip()
+		
+	-Mapping: 
+		+ map(Function<T, R>->R): ~SELECT in SQL-> select information from certain objects(Column)
+		+ flatMap 
